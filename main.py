@@ -21,10 +21,10 @@ with open(API_KEY_FILE, "r") as API_file:
 response = requests.get(API_URL.format(CITY_ID, api_key, DEFAULT_UNITS))  # get the data and begin processing
 
 weather = json.loads(response.text)
-# debugging
-print(weather)
+# # debugging
+# print(weather)
 
-print(weather['main']['temp'])
+# print(weather['main']['temp'])
 
 # store the desired parameters into their own variables
 
