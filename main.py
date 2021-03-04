@@ -2,6 +2,7 @@
 # Author: Jeremy Genovese
 # Date Created: 3-4-2021
 # Version: 0.1
+#TODO: refactor the code into functional blocks
 
 import json
 import requests
@@ -24,3 +25,15 @@ weather = json.loads(response.text)
 print(weather)
 
 print(weather['main']['temp'])
+
+# store the desired parameters into their own variables
+
+current_city = weather['name']
+current_temp = weather['main']['temp']
+current_humidity = weather['main']['humidity']
+current_feel = weather['main']['feels_like']
+current_wind_speed = weather['wind']['speed']
+current_wind_gust = weather['wind']['gust']
+# display the output to the user
+print("Currently in {}:\nTemperatrure: {} F\nHumidity: {}%\nFeels Like: {} F".format(current_city, current_temp, current_humidity, current_feel))
+print("The wind speed is: {} mph, with gusts to {} mph".format(current_wind_speed, current_wind_gust))
