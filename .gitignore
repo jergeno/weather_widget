@@ -1,0 +1,6 @@
+# Ignore API keys
+openWeatherMap_API_key
+
+# Ignore master city ID list
+city.list.json
+

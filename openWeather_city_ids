@@ -1,0 +1,36 @@
+# List of Open Weather Map cities that I may want to poll
+
+        "id": 5015688,
+        "name": "Ypsilanti",
+        "state": "MI",
+        "country": "US",
+        "coord": {
+            "lon": -83.612991,
+            "lat": 42.24115
+
+
+        "id": 4984247,
+        "name": "Ann Arbor",
+        "state": "MI",
+        "country": "US",
+        "coord": {
+            "lon": -83.740883,
+            "lat": 42.277561
+
+
+        "id": 5014946,
+        "name": "Whitmore Lake",
+        "state": "MI",
+        "country": "US",
+        "coord": {
+            "lon": -83.743828,
+            "lat": 42.43948
+
+
+       "id": 5001929,
+        "name": "Midland",
+        "state": "MI",
+        "country": "US",
+        "coord": {
+            "lon": -84.247208,
+            "lat": 43.615582
