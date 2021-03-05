@@ -13,13 +13,14 @@ CITY_ID = {'Ypsilanti' : '5015688', 'Ann Arbor' : '4984247', 'Whitmore Lake' : '
 DEFAULT_UNITS = "imperial"
 
 # get the API key
-def Get_API_key(keyfile):
+def get_API_key(keyfile):
     with open(keyfile, "r") as API_file:
         key = API_file.readline()
         API_file.close()
     return key
 
-def Get_city_from_user():
+# get the city from the user
+def get_city_from_user():
     print('Select a city from the following options: ')
     for city in CITY_ID:
         print(city)
@@ -27,36 +28,35 @@ def Get_city_from_user():
     city_num = CITY_ID[selected_city]
     return city_num
     
-
-def Get_API_data(key, city_id):
+# download the json object and return its text as a dictionary object
+def get_API_data(key, city_id):
     response = requests.get(API_URL.format(city_id, key, DEFAULT_UNITS))  # get the data and begin processing
     weather_text = json.loads(response.text)
     return weather_text
 
 
+# break out the data into discrete variables WIP
+def parse_and_print_data(weather_dict_object):
+    current_city = weather_dict_object['name']
+    current_temp = weather_dict_object['main']['temp']
+    current_humidity = weather_dict_object['main']['humidity']
+    current_feel = weather_dict_object['main']['feels_like']
+    current_wind_speed = weather_dict_object['wind']['speed']
+    # if gust in weather: #TODO: Figure out an elegant way to check for the existence of a key. 'gust' is not always present
+    #     current_wind_gust = weather['wind']['gust']
+    # else:
+    #     pass
+    # display the output to the user
+    print()
+    print("Currently in {}:\nTemperatrure: {} F\nHumidity: {}%\nFeels Like: {} F".format(current_city, current_temp, current_humidity, current_feel))
+    print("The wind speed is: {} mph".format(current_wind_speed))
+
+# main method
 def main():
-    api_key = Get_API_key(API_KEY_FILE)
-    city_id_num = Get_city_from_user()
-    weather = Get_API_data(api_key, city_id_num)
-    return weather
-weather = main()
+    api_key = get_API_key(API_KEY_FILE)
+    city_id_num = get_city_from_user()
+    weather = get_API_data(api_key, city_id_num)
+    parse_and_print_data(weather)
 
-
-# debugging
-# print(weather)
-
-# store the desired parameters into their own variables
-
-current_city = weather['name']
-current_temp = weather['main']['temp']
-current_humidity = weather['main']['humidity']
-current_feel = weather['main']['feels_like']
-current_wind_speed = weather['wind']['speed']
-# if gust in weather: #TODO: Figure out an elegant way to check for the existence of a key. 'gust' is not always present
-#     current_wind_gust = weather['wind']['gust']
-# else:
-#     pass
-# display the output to the user
-print()
-print("Currently in {}:\nTemperatrure: {} F\nHumidity: {}%\nFeels Like: {} F".format(current_city, current_temp, current_humidity, current_feel))
-print("The wind speed is: {} mph".format(current_wind_speed))
+# fire missiles!
+main()
