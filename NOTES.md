@@ -6,7 +6,6 @@
 
 ## Next tasks
 * Figure out a way to deal with testing for a key in a nested dict. Specifically the wind gust does not exist bug
-    * Break out the 'wind' sub-dict into its own object and the it's not nested any more
 
 ## TODO
 * Refactor to retrieve the "one call" data and parse out for forecasting and warnings
