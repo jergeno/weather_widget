@@ -4,3 +4,8 @@ openWeatherMap_API_key
 # Ignore master city ID list
 city.list.json
 
+# Ignore venv
+venv
+
+# Ignore config
+config.yaml

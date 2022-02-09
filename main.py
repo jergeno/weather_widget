@@ -6,6 +6,7 @@
 
 import json
 import requests
+import yaml
 
 API_KEY_FILE = "/home/hiro/bin/weather_widget/openWeatherMap_API_key"
 API_URL = "http://api.openweathermap.org/data/2.5/weather?id={}&appid={}&units={}"

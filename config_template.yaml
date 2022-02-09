@@ -1,0 +1,5 @@
+# input your ouwn configuration data into this template
+
+api_key: "Openweathermap API Key"
+units: "imperial or metric"
+api_url: "url endpoint of the openweathermap api"
