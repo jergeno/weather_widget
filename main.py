@@ -14,6 +14,20 @@ CITY_ID = {'Ypsilanti' : '5015688', 'Ann Arbor' : '4984247', 'Whitmore Lake' : '
 with open("config.yaml") as configFile:
     config = yaml.load(configFile, Loader=yaml.FullLoader)
     
+# get the city id
+with open("city.list.json") as city_list_file:
+    cities=json.load(city_list_file)
+    citySubList = []
+    for item in cities:
+        if item["name"] == "Midland":
+            citySubList.append(item)
+    print("Did you mean: ")
+    for item in citySubList:
+        print("{}. {}, {}, {}".format(citySubList.index(item), item["name"], item["state"], item["country"]))
+        
+# TODO: next steps are to ship printing state if it is empty, and then move on to actually accepting user input ans returning the city id
+
+    
 # get the city from the user
 def get_city_from_user():
     print('Select a city from the following options: ')
@@ -53,5 +67,5 @@ def main():
     parse_and_print_data(weather)
 
 # fire missiles!
-main()
+#main()
 
