@@ -8,10 +8,7 @@ import json
 import requests
 import yaml
 
-API_KEY_FILE = "/home/hiro/bin/weather_widget/openWeatherMap_API_key"
-API_URL = "http://api.openweathermap.org/data/2.5/weather?id={}&appid={}&units={}"
 CITY_ID = {'Ypsilanti' : '5015688', 'Ann Arbor' : '4984247', 'Whitmore Lake' : '5014946', 'Midland' : '5001929'}
-DEFAULT_UNITS = "imperial"
 
 # load the configuration
 with open("config.yaml") as configFile:
@@ -28,7 +25,7 @@ def get_city_from_user():
     
 # download the json object and return its text as a dictionary object
 def get_API_data(key, city_id):
-    response = requests.get(API_URL.format(city_id, key, DEFAULT_UNITS))  # get the data and begin processing
+    response = requests.get(config["api_url"].format(city_id, key, config["units"]))  # get the data and begin processing
     weather_text = json.loads(response.text)
     return weather_text
 
@@ -51,7 +48,6 @@ def parse_and_print_data(weather_dict_object):
 
 # main method
 def main():
-#    api_key = get_API_key(API_KEY_FILE)
     city_id_num = get_city_from_user()
     weather = get_API_data(config["api_key"], city_id_num)
     parse_and_print_data(weather)
