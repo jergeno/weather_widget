@@ -13,13 +13,10 @@ API_URL = "http://api.openweathermap.org/data/2.5/weather?id={}&appid={}&units={
 CITY_ID = {'Ypsilanti' : '5015688', 'Ann Arbor' : '4984247', 'Whitmore Lake' : '5014946', 'Midland' : '5001929'}
 DEFAULT_UNITS = "imperial"
 
-# get the API key
-def get_API_key(keyfile):
-    with open(keyfile, "r") as API_file:
-        key = API_file.readline()
-        API_file.close()
-    return key
-
+# load the configuration
+with open("config.yaml") as configFile:
+    config = yaml.load(configFile, Loader=yaml.FullLoader)
+    
 # get the city from the user
 def get_city_from_user():
     print('Select a city from the following options: ')
@@ -54,10 +51,11 @@ def parse_and_print_data(weather_dict_object):
 
 # main method
 def main():
-    api_key = get_API_key(API_KEY_FILE)
+#    api_key = get_API_key(API_KEY_FILE)
     city_id_num = get_city_from_user()
-    weather = get_API_data(api_key, city_id_num)
+    weather = get_API_data(config["api_key"], city_id_num)
     parse_and_print_data(weather)
 
 # fire missiles!
 main()
+
