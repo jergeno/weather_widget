@@ -4,7 +4,7 @@
 # A tool to poll Open Weather Map and display the results
 # Author: Jeremy Genovese
 # Date Created: 3-4-2021
-# Version: 0.1
+# Version: 0.2
 #TODO: refactor the code into functional blocks. IN PROGRESS
 
 import json
@@ -12,39 +12,38 @@ import requests
 import yaml
 
 cities=[]
-CITY_ID = {'Ypsilanti' : '5015688', 'Ann Arbor' : '4984247', 'Whitmore Lake' : '5014946', 'Midland' : '5001929'}
+
 
 # load the configuration
 with open("config.yaml") as configFile:
     config = yaml.load(configFile, Loader=yaml.FullLoader)
-    
-# get the city id
+
+# load the city list
 with open("city.list.json") as city_list_file:
     cities=json.load(city_list_file)
-print(type(cities))
-citySubList = []
-for item in cities:
-    if item["name"] == "Midland":
-        citySubList.append(item)
-print("Did you mean: ")
-for item in citySubList:
-     print("{}. {}, {}, {}".format(citySubList.index(item), item["name"], item["state"], item["country"]))
-city = citySubList[int(input("Enter your choice: "))]
-print(city["id"])
+
+# get the city id
+def get_city_id():
+    userCity = input("Please enter a city name: ")
+    citySubList = []
+    for item in cities:
+        if item["name"].casefold() == userCity.casefold():
+            citySubList.append(item)
+    if len(citySubList) == 0:
+        print("City not found!")
+        exit(0)
+    elif len(citySubList) > 1:
+        print("Did you mean: ")
+        for item in citySubList:
+            print("{}. {}, {}, {}".format(citySubList.index(item), item["name"], item["state"], item["country"]))
+        city = citySubList[int(input("Enter your choice: "))]
+    else:
+        city = citySubList[0]
+    return city["id"]
 
         
-# TODO: next steps are to ship printing state if it is empty, and then move on to actually accepting user input ans returning the city id
+# TODO: next steps are to skip printing state if it is empty
 
-    
-# get the city from the user
-def get_city_from_user():
-    print('Select a city from the following options: ')
-    for city in CITY_ID:
-        print(city)
-    selected_city = input()
-    city_num = CITY_ID[selected_city]
-    return city_num
-    
 # download the json object and return its text as a dictionary object
 def get_API_data(key, city_id):
     response = requests.get(config["api_url"].format(city_id, key, config["units"]))  # get the data and begin processing
@@ -70,10 +69,10 @@ def parse_and_print_data(weather_dict_object):
 
 # main method
 def main():
-    city_id_num = get_city_from_user()
+    city_id_num = get_city_id()
     weather = get_API_data(config["api_key"], city_id_num)
     parse_and_print_data(weather)
 
 # fire missiles!
-#main()
+main()
 
