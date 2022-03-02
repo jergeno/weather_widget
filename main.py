@@ -22,6 +22,7 @@ with open("config.yaml") as configFile:
 with open("city.list.json") as city_list_file:
     cities=json.load(city_list_file)
 
+# TODO: change to return the lat and long from the city
 # get the city id
 def get_city_id():
     userCity = input("Please enter a city name: ")
@@ -39,7 +40,7 @@ def get_city_id():
         city = citySubList[int(input("Enter your choice: "))]
     else:
         city = citySubList[0]
-    return city["id"]
+    return city["coord"]["lat"], city["coord"]["lon"]
 
         
 # TODO: next steps are to skip printing state if it is empty
@@ -65,13 +66,16 @@ def parse_and_print_data(weather_dict_object):
     # display the output to the user
     print()
     print("Currently in {}:\nTemperatrure: {} F\nHumidity: {}%\nFeels Like: {} F".format(current_city, current_temp, current_humidity, current_feel))
-    print("The wind speed is: {} mph".format(current_wind_speed))
+    print("Wind speed: {} mph".format(current_wind_speed))
 
 # main method
 def main():
     city_id_num = get_city_id()
-    weather = get_API_data(config["api_key"], city_id_num)
-    parse_and_print_data(weather)
+    print(city_id_num)
+    #weather = get_API_data(config["api_key"], city_id_num)
+    #DEBUG
+    #print(weather)
+    #parse_and_print_data(weather)
 
 # fire missiles!
 main()
