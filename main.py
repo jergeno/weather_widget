@@ -24,7 +24,7 @@ with open("city.list.json") as city_list_file:
 
 # TODO: change to return the lat and long from the city
 # get the city id
-def get_city_id():
+def get_city_coords():
     userCity = input("Please enter a city name: ")
     citySubList = []
     for item in cities:
@@ -46,8 +46,9 @@ def get_city_id():
 # TODO: next steps are to skip printing state if it is empty
 
 # download the json object and return its text as a dictionary object
-def get_API_data(key, city_id):
-    response = requests.get(config["api_url"].format(city_id, key, config["units"]))  # get the data and begin processing
+# see OpenWeatherMap API docs at https://openweathermap.org/api/one-call-api for information
+def get_API_data(key, city_coords, exclude):
+    response = requests.get(config["api_url"].format(city_coords[0], city_coords[1], exclude, key, config["units"]))  # get the data and begin processing
     weather_text = json.loads(response.text)
     return weather_text
 
@@ -70,11 +71,10 @@ def parse_and_print_data(weather_dict_object):
 
 # main method
 def main():
-    city_id_num = get_city_id()
-    print(city_id_num)
-    #weather = get_API_data(config["api_key"], city_id_num)
+    city_coordinates = get_city_coords()
+    weather = get_API_data(config["api_key"], city_coordinates, "minutely") 
     #DEBUG
-    #print(weather)
+    print(weather)
     #parse_and_print_data(weather)
 
 # fire missiles!
