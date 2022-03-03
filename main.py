@@ -67,7 +67,7 @@ def parse_and_print_data(weather_object, city_object):
     # display the output to the user
     print()
     print("Currently in {}:\nTemperatrure: {} F\nHumidity: {}%\nFeels Like: {} F".format(current_city, current_temp, current_humidity, current_feel))
-    print("Wind Speed: {} mph\n".format(current_wind_speed))
+    print("Wind Speed: {} mph".format(current_wind_speed))
     print("Today's High: {} F\nToday's Low: {} F".format(daily_high, daily_low))
 
 # main method
