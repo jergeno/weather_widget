@@ -60,6 +60,8 @@ def parse_and_print_data(weather_object, city_object):
     current_wind_speed = weather_object["current"]["wind_speed"]
     daily_high = weather_object["daily"][0]["temp"]["max"]
     daily_low = weather_object["daily"][0]["temp"]["min"]
+    tomorrow_high = weather_object["daily"][1]["temp"]["max"]
+    tomorrow_low = weather_object["daily"][1]["temp"]["min"]
     # if gust in weather: #TODO: Figure out an elegant way to check for the existence of a key. 'gust' is not always present
     #     current_wind_gust = weather['wind']['gust']
     # else:
@@ -68,7 +70,9 @@ def parse_and_print_data(weather_object, city_object):
     print()
     print("Currently in {}:\nTemperatrure: {} F\nHumidity: {}%\nFeels Like: {} F".format(current_city, current_temp, current_humidity, current_feel))
     print("Wind Speed: {} mph".format(current_wind_speed))
-    print("Today's High: {} F\nToday's Low: {} F".format(daily_high, daily_low))
+    print("High: {} F\nLow: {} F".format(daily_high, daily_low))
+    print("\nTomorrow's Forecast")
+    print("High: {} F\nLow: {} F".format(tomorrow_high, tomorrow_low))
 
 # main method
 def main():
