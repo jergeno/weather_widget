@@ -8,11 +8,9 @@
 #TODO: refactor the code into functional blocks. IN PROGRESS
 
 import json
+import re
 import requests
 import yaml
-
-cities=[]
-
 
 # load the configuration
 with open("config.yaml") as configFile:
@@ -24,7 +22,7 @@ with open("city.list.json") as city_list_file:
 
 # TODO: change to return the lat and long from the city
 # get the city id
-def get_city_coords():
+def get_city():
     userCity = input("Please enter a city name: ")
     citySubList = []
     for item in cities:
@@ -40,26 +38,28 @@ def get_city_coords():
         city = citySubList[int(input("Enter your choice: "))]
     else:
         city = citySubList[0]
-    return city["coord"]["lat"], city["coord"]["lon"]
+    return city
 
         
 # TODO: next steps are to skip printing state if it is empty
 
 # download the json object and return its text as a dictionary object
 # see OpenWeatherMap API docs at https://openweathermap.org/api/one-call-api for information
-def get_API_data(key, city_coords, exclude):
-    response = requests.get(config["api_url"].format(city_coords[0], city_coords[1], exclude, key, config["units"]))  # get the data and begin processing
+def get_API_data(key, city_object, exclude):
+    response = requests.get(config["api_url"].format(city_object["coord"]["lat"], city_object["coord"]["lon"], exclude, key, config["units"]))  # get the data and begin processing
     weather_text = json.loads(response.text)
     return weather_text
 
 
 # break out the data into discrete variables WIP
-def parse_and_print_data(weather_dict_object):
-    current_city = weather_dict_object['name']
-    current_temp = weather_dict_object['main']['temp']
-    current_humidity = weather_dict_object['main']['humidity']
-    current_feel = weather_dict_object['main']['feels_like']
-    current_wind_speed = weather_dict_object['wind']['speed']
+def parse_and_print_data(weather_object, city_object):
+    current_city = city_object["name"] 
+    current_temp = weather_object["current"]["temp"]
+    current_humidity = weather_object["current"]["humidity"]
+    current_feel = weather_object["current"]["feels_like"]
+    current_wind_speed = weather_object["current"]["wind_speed"]
+    daily_high = weather_object["daily"][0]["temp"]["max"]
+    daily_low = weather_object["daily"][0]["temp"]["min"]
     # if gust in weather: #TODO: Figure out an elegant way to check for the existence of a key. 'gust' is not always present
     #     current_wind_gust = weather['wind']['gust']
     # else:
@@ -67,15 +67,14 @@ def parse_and_print_data(weather_dict_object):
     # display the output to the user
     print()
     print("Currently in {}:\nTemperatrure: {} F\nHumidity: {}%\nFeels Like: {} F".format(current_city, current_temp, current_humidity, current_feel))
-    print("Wind speed: {} mph".format(current_wind_speed))
+    print("Wind Speed: {} mph\n".format(current_wind_speed))
+    print("Today's High: {} F\nToday's Low: {} F".format(daily_high, daily_low))
 
 # main method
 def main():
-    city_coordinates = get_city_coords()
-    weather = get_API_data(config["api_key"], city_coordinates, "minutely") 
-    #DEBUG
-    print(weather)
-    #parse_and_print_data(weather)
+    city = get_city()
+    weather = get_API_data(config["api_key"], city, "minutely") 
+    parse_and_print_data(weather, city)
 
 # fire missiles!
 main()
