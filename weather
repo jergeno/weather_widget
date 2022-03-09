@@ -11,6 +11,8 @@ import json
 import re
 import requests
 import yaml
+import sys
+
 
 # load the configuration
 with open("config.yaml") as configFile:
