@@ -40,6 +40,8 @@ def get_city():
         city = citySubList[int(input("Enter your choice: "))]
     else:
         city = citySubList[0]
+
+    print(city) #DEBUG
     return city
 
         
@@ -62,19 +64,26 @@ def parse_and_print_data(weather_object, city_object):
     current_wind_speed = weather_object["current"]["wind_speed"]
     daily_high = weather_object["daily"][0]["temp"]["max"]
     daily_low = weather_object["daily"][0]["temp"]["min"]
+    daily_condition = weather_object["daily"][0]["weather"][0]["main"]
     tomorrow_high = weather_object["daily"][1]["temp"]["max"]
     tomorrow_low = weather_object["daily"][1]["temp"]["min"]
+    tomorrow_condition = weather_object["daily"][1]["weather"][0]["main"]
     # if gust in weather: #TODO: Figure out an elegant way to check for the existence of a key. 'gust' is not always present
     #     current_wind_gust = weather['wind']['gust']
     # else:
     #     pass
-    # display the output to the user
+
+    # display the output to the user TODO: clean this up for a consistent style and to make it more readable
     print()
     print("Currently in {}:\nTemperatrure: {} F\nHumidity: {}%\nFeels Like: {} F".format(current_city, current_temp, current_humidity, current_feel))
     print("Wind Speed: {} mph".format(current_wind_speed))
-    print("High: {} F\nLow: {} F".format(daily_high, daily_low))
+
+    print()
+    print("Today's Forecast:")
+    print("High: {} F\nLow: {} F\nConditions: {}".format(daily_high, daily_low, daily_condition))
+
     print("\nTomorrow's Forecast")
-    print("High: {} F\nLow: {} F".format(tomorrow_high, tomorrow_low))
+    print("High: {} F\nLow: {} F\nConditions: {}".format(tomorrow_high, tomorrow_low, tomorrow_condition))
 
 # main method
 def main():
