@@ -22,12 +22,16 @@ with open("config.yaml") as configFile:
 with open("city.list.json") as city_list_file:
     cities=json.load(city_list_file)
 
-# TODO: change to return the lat and long from the city
+
 # get the city id
 def get_city():
     if len(sys.argv) == 2:
         userCity = sys.argv[1]
+    elif len(sys.argv) == 1:
+        userCity = input("Please enter a city name: ")
     else:
+        print("Error: too many arguments were passed!")
+         #TODO: if more than one argument passed, concat them into a space-delimited string and pass that
         userCity = input("Please enter a city name: ")
     citySubList = []
     for item in cities:
