@@ -25,7 +25,10 @@ with open("city.list.json") as city_list_file:
 # TODO: change to return the lat and long from the city
 # get the city id
 def get_city():
-    userCity = input("Please enter a city name: ")
+    if len(sys.argv) == 2:
+        userCity = sys.argv[1]
+    else:
+        userCity = input("Please enter a city name: ")
     citySubList = []
     for item in cities:
         if item["name"].casefold() == userCity.casefold():
